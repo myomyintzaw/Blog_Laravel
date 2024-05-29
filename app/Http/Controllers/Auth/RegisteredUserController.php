@@ -36,25 +36,32 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'phone' => 'required|min:11|numeric',
+            'phone' => 'required',
             'address' => 'required|min:5',
             'photo' => 'nullable|image|mimes:png,jpg,webp,jpeg',
         ]);
 
+        // if ($request->hasFile('image')) {
+        //     // $imagepath = 
+        //     $request->file('image')->store('images', 'public');
+        //     // $newimage['image'] = $imagepath;
+        // }
+
+        $newuser = $request->all();
         if ($request->hasFile('image')) {
-            // $imagepath = 
-            $request->file('image')->store('images', 'public');
-            // $newimage['image'] = $imagepath;
+            $photoPath = $request->file('image')->store('images', 'public');
+            $newuser['image'] = $photoPath;
         }
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'address' => $request->address,
-            'image' => $request->image,
-            'password' => Hash::make($request->password),
-        ]);
+        $user = User::create($newuser);
+        // $user = User::create([
+        //     'name' => $request->name,
+        //     'email' => $request->email,
+        //     'phone' => $request->phone,
+        //     'address' => $request->address,
+        //     'image' => $request->image,
+        //     'password' => Hash::make($request->password),
+        // ]);
 
         event(new Registered($user));
 
