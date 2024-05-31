@@ -42,6 +42,10 @@
             <x-input-error :messages="$errors->get('address')" class="mt-2" />
         </div>
 
+        <!--image-->
+        <div>
+            <img src="{{ old('image', $user->image) }}" width="100">
+        </div>
 
 
         {{-- <div>
@@ -124,6 +128,8 @@
                 </div>
             @endif
         </div>
+
+
 
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>

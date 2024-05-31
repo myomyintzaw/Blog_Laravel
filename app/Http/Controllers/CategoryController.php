@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -14,6 +15,9 @@ class CategoryController extends Controller
     public function index()
     {
         //
+        $categories = Category::all();
+        // return $categories;
+        return view('categories.index', compact('categories'));
     }
 
     /**
@@ -22,14 +26,26 @@ class CategoryController extends Controller
     public function create()
     {
         //
+        // echo "Ejklfjsdkl";
+        // $this->hello();
+        // return "hello";
+
+        return view('categories.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCategoryRequest $request)
+    // public function store(StoreCategoryRequest $request)
+    public function store(Request $request)
     {
         //
+        // return "eji";
+        // dd($request->all());
+        $category = new Category();
+        $category->name = $request->name;
+        $category->save();
+        return redirect()->route('categories.index')->with('success', "Create Category Success");
     }
 
     /**
@@ -62,5 +78,10 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         //
+    }
+
+    private function hello()
+    {
+        echo "hello Laravel";
     }
 }

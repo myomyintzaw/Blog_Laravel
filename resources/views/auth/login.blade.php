@@ -14,12 +14,12 @@
         </div>
 
         <!-- Address -->
-        <div>
+        {{-- <div>
             <x-input-label for="address" :value="__('Address')" />
             <x-text-area name="address">
             </x-text-area>
             <x-input-error :messages="$errors->get('address')" class="mt-2" />
-        </div>
+        </div> --}}
 
         <!-- Password -->
         <div class="mt-4">
